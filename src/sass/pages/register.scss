@@ -1,0 +1,108 @@
+.fs-form-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  color: $grey-50;
+
+  .fs-form {
+    position: relative;
+    text-align: left;
+    padding: 0 0 6em 0;
+  }
+
+  .fs-form-full {
+    top: 30%;
+    margin: 0 auto;
+    width: 50%;
+    max-width: 960px;
+    font-weight: bold;
+  }
+
+  .fs-fields {
+    position: relative;
+    margin: 0 auto;
+    padding: 0;
+    top: 0;
+    list-style: none;
+
+    .fs-step {
+      width: 100%;
+
+      .fs-field-label {
+      }
+
+      .fs-field-input {
+      }
+    }
+  }
+
+  .fs-fields > li {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    padding: 0;
+
+    -webkit-transition: all .8s ease-in-out;
+    -moz-transition: all .8s ease-in-out;
+    -o-transition: all .8s ease-in-out;
+    transition: all .8s ease-in-out;
+  }
+
+  /* Visibility control of elements */
+  .fs-form li.fs-step {
+    position: absolute;
+  }
+
+  /* Animation classes & animations */
+  .fs-form li.fs-current {
+    visibility: visible;
+  }
+
+  .fs-form li.fs-hide {
+    visibility: hidden;
+  }
+
+  .fs-continue-btn {
+    position: absolute;
+    top: 50%;
+    left: 40%;
+    margin: 0 40px 60px 0;
+  }
+
+  .fs-links {
+    position: absolute;
+    top: 30%;
+    right: 60px;
+    list-style: none;
+    cursor: pointer;
+
+    .fs-link-control{
+      margin: 5px 0;
+      font-size: smaller;
+    }
+  }
+
+}
+
+//* Hide current li when navigating to previous question */
+.fs-form .fs-hide {
+  visibility: visible;
+}
+
+.fs-form .fs-hide {
+  -webkit-animation: animHidePrev 0.5s cubic-bezier(0.7,0,0.3,1) forwards;
+  animation: animHidePrev 0.5s cubic-bezier(0.7,0,0.3,1) forwards;
+}
+
+.fs-form .fs-hide {
+  -webkit-animation-delay: 0.1s;
+  animation-delay: 0.1s;
+}
+
+@-webkit-keyframes animHidePrev {
+  to { opacity: 0; -webkit-transform: translate3d(0,500px,0); }
+}
+
+@keyframes animHidePrev {
+  to { opacity: 0; -webkit-transform: translate3d(0,500px,0); transform: translate3d(0,500px,0); }
+}

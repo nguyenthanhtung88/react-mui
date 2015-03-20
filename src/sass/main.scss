@@ -1,0 +1,22 @@
+@import "node_modules/material-ui-sass/material-ui";
+
+@import "pages/register";
+
+/* App Specific Styles */
+.mui-app-canvas {
+  height: 90%;
+}
+
+.logo {
+  cursor: pointer;
+  padding-top: 7px;
+  margin-left: 20px;
+}
+
+body {
+  background: $grey-700;
+}
+
+.clear {
+  clear: both;
+}
