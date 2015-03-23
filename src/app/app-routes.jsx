@@ -9,6 +9,7 @@ var Master = require('./components/candidate/layouts/default.jsx');
 
 var CandidateDashboard = require('./components/candidate/index/dashboard.jsx');
 var CandidateRegister = require('./components/candidate/users/register.jsx');
+var CandidateSignup = require('./components/candidate/users/sign-up.jsx');
 
 /** Routes: https://github.com/rackt/react-router/blob/master/docs/api/components/Route.md
 *
@@ -24,6 +25,7 @@ var AppRoutes = (
     <DefaultRoute handler={CandidateDashboard} />
 
     <Route name="dashboard" handler={CandidateDashboard} />
+    <Route name="signup" handler={CandidateSignup} />
     <Route name="register" handler={CandidateRegister} />
   </Route>
 );

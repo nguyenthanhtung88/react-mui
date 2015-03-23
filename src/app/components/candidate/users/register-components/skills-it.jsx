@@ -6,10 +6,12 @@ var SkillsIT = React.createClass({
   render: function() {
     return (
       <li className={this.props.stepClassname}>
-        <label className="fs-field-label">Skills (IT)</label>
-        <br/>
-        <TextField
-          hintText="" />
+        <label className="fs-field-label fs-anim-upper">Skills (IT)</label>
+
+        <div className="fs-anim-lower">
+          <TextField
+            hintText="" />
+        </div>
       </li>
     );
   }

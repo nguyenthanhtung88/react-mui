@@ -13,15 +13,14 @@ var React = require('react'),
   RaisedButton = mui.RaisedButton;
 
 var controlLinks = [
-  {key: 'step-1', text: 'Account'},
-  {key: 'step-2', text: 'Name'},
-  {key: 'step-3', text: 'Birthday'},
-  {key: 'step-4', text: 'Gender'},
-  {key: 'step-5', text: 'Academic History'},
-  {key: 'step-6', text: 'Skills (Language)'},
-  {key: 'step-7', text: 'Skills (IT)'},
-  {key: 'step-8', text: 'Work Experience'},
-  {key: 'step-9', text: 'Other'}
+  {text: 'Name'},
+  {text: 'Birthday'},
+  {text: 'Gender'},
+  {text: 'Academic History'},
+  {text: 'Skills (Language)'},
+  {text: 'Skills (IT)'},
+  {text: 'Work Experience'},
+  {text: 'Other'}
 ]
 
 var CandidateRegister = React.createClass({
@@ -29,7 +28,8 @@ var CandidateRegister = React.createClass({
   getInitialState: function() {
     return {
       currentStep: 1,
-      maxStep: 9,
+      lastStep: 1,
+      maxStep: 8,
       textButton: 'Next'
     }
   },
@@ -37,42 +37,41 @@ var CandidateRegister = React.createClass({
   _handleTouchTap: function() {
     var nextStep = (this.state.currentStep + 1) > this.state.maxStep ? 1 : this.state.currentStep + 1;
 
-    var stepList = this._getStepOrderMapping();
-
     this.setState({
       currentStep: nextStep,
+      lastStep: this.state.currentStep,
       textButton: nextStep == this.state.maxStep ? 'Submit' : 'Next'
     });
 
   },
 
   _getStepClassname: function(numStep) {
-    return "fs-step" + (this.state.currentStep == numStep ? ' fs-current' : ' fs-hide');
+    return "fs-step" + (this.state.currentStep == numStep ? ' fs-current fs-show' : this.state.lastStep == numStep ? ' fs-hide' : '');
   },
 
-  _getStepOrderMapping: function() {
-    return [
-      this.refs.registerAccount,
-      this.refs.registerName,
-      this.refs.registerBirthday,
-      this.refs.registerGender
-    ];
+  handleNavStepChange: function(nextStep) {
+    if (nextStep != this.state.currentStep) {
+      this.setState({
+        currentStep: nextStep,
+        lastStep: this.state.currentStep,
+        textButton: nextStep == this.state.maxStep ? 'Submit' : 'Next'
+      });
+    };
   },
 
   render: function() {
     return (
         <div className="fs-form-wrap">
           <div className="fs-form fs-form-full">
-              <ol className="fs-fields">
-                <RegisterAccount ref="registerAccount" stepClassname={this._getStepClassname(1)} />
-                <RegisterName ref="registerName" stepClassname={this._getStepClassname(2)} />
-                <RegisterBirthday ref="registerBirthday" stepClassname={this._getStepClassname(3)} />
-                <RegisterGender ref="registerGender" stepClassname={this._getStepClassname(4)} />
-                <AcademicHistory ref="academicHistory" stepClassname={this._getStepClassname(5)} />
-                <SkillsLanguage ref="skillsLanguage" stepClassname={this._getStepClassname(6)} />
-                <SkillsIT ref="skillsIT" stepClassname={this._getStepClassname(7)} />
-                <WorkExperience ref="workExperience" stepClassname={this._getStepClassname(8)} />
-                <Other ref="other" stepClassname={this._getStepClassname(9)} />
+              <ol className={"fs-fields" + (this.state.lastStep < this.state.currentStep ? ' fs-display-next' : ' fs-display-prev')}>
+                <RegisterName stepClassname={this._getStepClassname(1)} />
+                <RegisterBirthday stepClassname={this._getStepClassname(2)} />
+                <RegisterGender stepClassname={this._getStepClassname(3)} />
+                <AcademicHistory stepClassname={this._getStepClassname(4)} />
+                <SkillsLanguage stepClassname={this._getStepClassname(5)} />
+                <SkillsIT stepClassname={this._getStepClassname(6)} />
+                <WorkExperience stepClassname={this._getStepClassname(7)} />
+                <Other stepClassname={this._getStepClassname(8)} />
               </ol>
           </div>
 
@@ -81,7 +80,7 @@ var CandidateRegister = React.createClass({
           </div>
 
           <div className="fs-controls">
-            <NavLinks data={controlLinks} />
+            <NavLinks data={controlLinks} currentStep={this.state.currentStep} requestChange={this.handleNavStepChange} />
           </div>
         </div>
     );

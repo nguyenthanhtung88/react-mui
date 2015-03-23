@@ -8,18 +8,21 @@ var RegisterGender = React.createClass({
   render: function() {
     return (
       <li className={this.props.stepClassname}>
-        <label className="fs-field-label">Choose Gender</label>
-        <br/>
+        <label className="fs-field-label fs-anim-upper">Choose Gender</label>
 
-        <RadioButtonGroup
-          defaultSelected="0">
-          <RadioButton
-            value="0"
-            label="Male" />
-          <RadioButton
-            value="1"
-            label="Female" />
-        </RadioButtonGroup>
+        <div className="fs-anim-lower">
+          <RadioButtonGroup
+            name="gender"
+            defaultSelected="0">
+            <RadioButton
+              value="0"
+              label="Male"
+              defaultChecked={true} />
+            <RadioButton
+              value="1"
+              label="Female" />
+          </RadioButtonGroup>
+        </div>
       </li>
     );
   }

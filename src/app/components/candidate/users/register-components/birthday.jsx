@@ -6,10 +6,12 @@ var RegisterBirthday = React.createClass({
   render: function() {
     return (
       <li className={this.props.stepClassname}>
-        <label className="fs-field-label">Choose Birthday</label>
-        <br/>
-        <DatePicker
-          hintText="Birthday" />
+        <label className="fs-field-label fs-anim-upper">Choose Birthday</label>
+
+        <div className="fs-anim-lower">
+          <DatePicker
+            hintText="Birthday" />
+        </div>
       </li>
     );
   }

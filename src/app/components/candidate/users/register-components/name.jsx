@@ -10,14 +10,16 @@ var RegisterName = React.createClass({
   render: function() {
     return (
       <li className={this.props.stepClassname}>
-        <label className="fs-field-label">Name</label>
-        <br/>
-        <TextField
-          hintText="First Name" /><br/>
-        <TextField
-          hintText="Middle Name" /><br/>
-        <TextField
-          hintText="Last Name" />
+        <label className="fs-field-label fs-anim-upper">Name</label>
+
+        <div className="fs-anim-lower">
+          <TextField
+            hintText="First Name" /><br/>
+          <TextField
+            hintText="Middle Name" /><br/>
+          <TextField
+            hintText="Last Name" />
+        </div>
       </li>
     );
   }

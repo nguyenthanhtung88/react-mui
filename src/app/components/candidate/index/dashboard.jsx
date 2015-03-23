@@ -13,16 +13,16 @@ var CandidateDashboard = React.createClass({
   render: function() {
 
     return (
-      <div className="example-page">
+      <div>
         <h1>Welcome to Awesome Candidate</h1>
 
-        <RaisedButton label="Register" primary={true} onTouchTap={this._handleTouchTap} />
+        <RaisedButton label="Sign Up" primary={true} onTouchTap={this._handleTouchTap} />
       </div>
     );
   },
 
   _handleTouchTap: function() {
-    this.transitionTo('register');
+    this.transitionTo('signup');
   }
 
 });
