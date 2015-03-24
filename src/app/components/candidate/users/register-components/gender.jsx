@@ -5,6 +5,9 @@ var React = require('react'),
   RadioButton = mui.RadioButton;
 
 var RegisterGender = React.createClass({
+  componentDidMount: function() {
+    this.props.markStep(this.props.step, true);
+  },
   render: function() {
     return (
       <li className={this.props.stepClassname}>

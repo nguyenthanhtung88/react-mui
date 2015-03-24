@@ -36,10 +36,12 @@ var CandidateSignup = React.createClass({
       email: this.refs.email.getValue()
     });
 
+    this.handleValidation('email');
+
     // console.log(this.state);
 
     // console.log(this.state.email);
-    // console.log(this.getValidationMessages('email'));
+    console.log(this.getValidationMessages('email'));
   },
   render: function() {
     return (
@@ -52,7 +54,7 @@ var CandidateSignup = React.createClass({
             name="email"
             ref="email"
             errorText={this.getErrorText('email')}
-            onBlur={this.handleValidation('email')}
+            onBlur={this.doValidate}
             onChange={this._handleInputChange} /><br/>
 
           <TextField

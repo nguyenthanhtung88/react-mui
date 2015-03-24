@@ -4,7 +4,8 @@
 
 /* App Specific Styles */
 .mui-app-canvas {
-  height: 90%;
+  height: 100%;
+  overflow: hidden;
 }
 
 .logo {
@@ -15,6 +16,7 @@
 
 body {
   background: $grey-700;
+  min-height: 590px;
 }
 
 .clear {
