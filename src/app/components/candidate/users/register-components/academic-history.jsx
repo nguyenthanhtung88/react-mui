@@ -44,25 +44,25 @@ var AcademicHistory = React.createClass({
         <label className="fs-field-label fs-anim-upper">Academic Histories</label>
 
         <div className="fs-anim-lower">
-          <label>Highschool Name</label>
+          <div className="fs-field-input">Highschool Name</div>
           <DropDownMenu
             name="m_highschool_id"
             menuItems={highschoolItems} /><br/>
 
-          <label>Bachelor Name</label>
+          <div className="fs-field-input">Bachelor Name</div>
           <DropDownMenu
             name="m_bachelor_id"
-            menuItems={highschoolItems} /><br/>
+            menuItems={bachelorItems} /><br/>
 
-          <label>Master Course Name</label>
+          <div className="fs-field-input">Master Course Name</div>
           <DropDownMenu
             name="m_master_id"
-            menuItems={highschoolItems} /><br/>
+            menuItems={masterItems} /><br/>
 
-          <label>Doctor Course Name</label>
+          <div className="fs-field-input">Doctor Course Name</div>
           <DropDownMenu
             name="m_doctor_id"
-            menuItems={highschoolItems} /><br/>
+            menuItems={doctorItems} /><br/>
         </div>
       </li>
     );

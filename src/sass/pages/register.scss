@@ -51,7 +51,7 @@
   }
 
   .fs-form-full {
-    top: 30%;
+    top: 20%;
     margin: 0 auto;
     width: 50%;
     max-width: 960px;
@@ -74,6 +74,8 @@
       }
 
       .fs-field-input {
+        display: inline-block;
+        width: 40%;
       }
     }
 
@@ -84,7 +86,7 @@
 
   .fs-continue-btn {
     position: absolute;
-    top: 60%;
+    top: 65%;
     left: 40%;
     margin: 0 40px 60px 0;
     background-color: transparent;
@@ -103,7 +105,7 @@
 
   .fs-links {
     position: absolute;
-    top: 30%;
+    top: 20%;
     right: 60px;
     list-style: none;
     cursor: pointer;
@@ -230,6 +232,20 @@
   .mui-menu {
     color: $grey-900;
   }
+
+  .mui-menu-control {
+    .mui-menu-label {
+      padding: 0;
+    }
+
+    .mui-menu-drop-down-icon {
+      right: 0;
+    }
+
+    .mui-menu-control-underline {
+      margin: 0;
+    }
+  }
 }
 
 .mui-drop-down-menu:hover, .mui-drop-down-menu:focus {
@@ -239,3 +255,5 @@
     }
   }
 }
+
+@import "progress.scss";

@@ -32,16 +32,17 @@ var CandidateSignup = React.createClass({
   },
   doValidate: function() {
     // Validate email
-    this.setState({
-      email: this.refs.email.getValue()
-    });
+    // this.setState({
+    //   email: this.refs.email.getValue()
+    // });
 
-    this.handleValidation('email');
+    // this.handleValidation('email');
 
     // console.log(this.state);
 
     // console.log(this.state.email);
-    console.log(this.getValidationMessages('email'));
+    // console.log(this.getValidationMessages('email'));
+    this.transitionTo('register');
   },
   render: function() {
     return (

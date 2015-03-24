@@ -9,7 +9,7 @@ var React = require('react'),
   SkillsIT = require('./register-components/skills-it.jsx'),
   WorkExperience = require('./register-components/work-experience.jsx'),
   Other = require('./register-components/other.jsx'),
-  NavLinks = require('./register-components/nav-links.jsx')
+  NavLinks = require('./register-components/nav-links.jsx'),
   RaisedButton = mui.RaisedButton;
 
 var controlLinks = [
