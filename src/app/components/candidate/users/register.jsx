@@ -10,6 +10,7 @@ var React = require('react'),
   WorkExperience = require('./register-components/work-experience.jsx'),
   Other = require('./register-components/other.jsx'),
   NavLinks = require('./register-components/nav-links.jsx'),
+  ProgressBar = require('./register-components/progress-bar.jsx'),
   RaisedButton = mui.RaisedButton;
 
 var controlLinks = [
@@ -31,12 +32,24 @@ var CandidateRegister = React.createClass({
       lastStep: 1,
       maxStep: 8,
       progressStep: 1,
-      textButton: 'Next',
+      textButton: 'next',
       hideButton: true,
       stepMarked: []
     }
   },
-
+  componentDidMount: function() {
+    document.addEventListener('keydown', this._handleKeyDown);
+  },
+  componentWillUnmount: function() {
+    document.removeEventListener('keydown', this._handleKeyDown);
+  },
+  _handleKeyDown: function(e) {
+    var keyCode = e.keyCode || e.which;
+    if (keyCode == 13 && this.checkStep(this.state.currentStep)) {
+      e.preventDefault();
+      this._handleTouchTap();
+    };
+  },
   _handleTouchTap: function() {
     var nextStep = (this.state.currentStep + 1) > this.state.maxStep ? 0 : this.state.currentStep + 1;
 
@@ -49,29 +62,26 @@ var CandidateRegister = React.createClass({
       currentStep: nextStep,
       progressStep: (nextStep > this.state.progressStep) ? nextStep : this.state.progressStep,
       lastStep: this.state.currentStep,
-      textButton: nextStep == this.state.maxStep ? 'Submit' : 'Next'
+      textButton: nextStep == this.state.maxStep ? 'Submit' : 'next'
     });
 
   },
-
   _getStepClassname: function(numStep) {
     return "fs-step" + (this.state.currentStep == numStep ? ' fs-current fs-show' : this.state.lastStep == numStep ? ' fs-hide' : '');
   },
-
   checkStep: function(step) {
+    // return true;
     return (this.state.stepMarked.hasOwnProperty(step) && this.state.stepMarked[step]);
   },
-
   handleNavStepChange: function(nextStep) {
     if (nextStep != this.state.currentStep && this.checkStep(nextStep) && this.checkStep(this.state.currentStep)) {
       this.setState({
         currentStep: nextStep,
         lastStep: this.state.currentStep,
-        textButton: nextStep == this.state.maxStep ? 'Submit' : 'Next'
+        textButton: nextStep == this.state.maxStep ? 'Submit' : 'next'
       });
     };
   },
-
   markStep: function(step, markedFlag) {
     var marked = typeof(markedFlag) == 'undefined' ? false : true;
     var stepMarked = this.state.stepMarked;
@@ -80,7 +90,6 @@ var CandidateRegister = React.createClass({
 
     this.setState({stepMarked: stepMarked});
   },
-
   render: function() {
     return (
         <div className={"fs-form-wrap" + (this.checkStep(this.state.currentStep) ? ' fs-enable-bg' : ' fs-disable-bg')}>
@@ -88,7 +97,7 @@ var CandidateRegister = React.createClass({
               <ol className={"fs-fields" + (this.state.lastStep < this.state.currentStep ? ' fs-display-next' : ' fs-display-prev')}>
                 <RegisterName stepClassname={this._getStepClassname(1)} markStep={this.markStep} step={1} />
                 <RegisterBirthday stepClassname={this._getStepClassname(2)} markStep={this.markStep} step={2} />
-                <RegisterGender stepClassname={this._getStepClassname(3)} markStep={this.markStep} step={3} />
+                <RegisterGender stepClassname={this._getStepClassname(3)} markStep={this.markStep} step={3} gotoNextStep={this._handleTouchTap} />
                 <AcademicHistory stepClassname={this._getStepClassname(4)} markStep={this.markStep} step={4} />
                 <SkillsLanguage stepClassname={this._getStepClassname(5)} markStep={this.markStep} step={5} />
                 <SkillsIT stepClassname={this._getStepClassname(6)} markStep={this.markStep} step={6} />
@@ -99,7 +108,9 @@ var CandidateRegister = React.createClass({
 
           <div >
             <button className={"fs-continue-btn" + (this.checkStep(this.state.currentStep) ? ' fs-btn-show' : ' fs-btn-hide')} onTouchTap={this._handleTouchTap} >
-              {this.state.textButton}
+              <span className="fs-next">{this.state.textButton}</span>
+              <br/>
+              <span className="fs-enter">Click enter-key</span>
             </button>
           </div>
 
