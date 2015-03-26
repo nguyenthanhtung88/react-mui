@@ -83,6 +83,24 @@
         display: inline-block;
         width: 150px;
       }
+
+      .fs-field-label-score {
+        display: inline-block;
+        width: 70px;
+      }
+
+      .fs-slider-area {
+        margin: 20px 0;
+
+        .fs-field-slider-value {
+          display: inline-block;
+          margin-left: 15px;
+        }
+      }
+
+      .fs-company-history {
+        margin: 10px 0;
+      }
     }
 
     .fs-current {
@@ -91,13 +109,14 @@
   }
 
   .fs-continue-btn {
-    position: absolute;
-    top: 65%;
-    left: 60%;
+    // position: absolute;
+    // top: 65%;
+    // left: 60%;
     background-color: transparent;
     border: 1px solid $grey-50;
     padding: 0 20px 10px 20px;
     font-weight: bold;
+    margin: 10px 0;
 
     .fs-next {
       font-size: xx-large;
@@ -109,32 +128,35 @@
   }
 
   .fs-btn-hide {
-    visibility: hidden;
+    display: none;
   }
 
   .fs-btn-show {
-    visibility: visible;
+    display: block;
   }
 
-  .fs-links {
+  .fs-controls {
     position: absolute;
     top: 20%;
     right: 60px;
-    list-style: none;
-    cursor: pointer;
 
-    .fs-link-control {
-      margin: 5px 0;
-      font-size: normal;
-    }
+    .fs-links {
+      list-style: none;
+      cursor: pointer;
 
-    .fs-link-current {
-      font-weight: bold;
-      // color: $cyan-500;
-    }
+      .fs-link-control {
+        margin: 5px 0;
+        font-size: normal;
+      }
 
-    .fs-link-hide {
-      color: $grey-400;
+      .fs-link-current {
+        font-weight: bold;
+        // color: $cyan-500;
+      }
+
+      .fs-link-hide {
+        color: $grey-400;
+      }
     }
   }
 

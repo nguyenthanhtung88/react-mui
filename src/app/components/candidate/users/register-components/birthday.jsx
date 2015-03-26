@@ -1,7 +1,8 @@
 var React = require('react'),
   mui = require('material-ui'),
   TextField = mui.TextField,
-  DropDownMenu = mui.DropDownMenu;
+  DropDownMenu = mui.DropDownMenu,
+  ButtonNext = require('./button-next.jsx');
 
 var ValidationMixin = require('react-validation-mixin');
 var Joi = require('joi');
@@ -105,7 +106,7 @@ var RegisterBirthday = React.createClass({
     return (
       <li className={this.props.stepClassname}>
         <div className="fs-field-label fs-anim-upper">
-          {"When is your birthday?"}<br/>
+          When is your birthday?<br/>
           <span className="font-size-small">* requirement</span>
         </div>
 
@@ -127,6 +128,8 @@ var RegisterBirthday = React.createClass({
             name="birthday_day"
             menuItems={this._getDayLists()}
             onChange={this._handleInputDayChange} /><br/>
+
+          <ButtonNext disabled={!this.props.checkStep(this.props.step)} onTouchTap={this.props.gotoNextStep} />
         </div>
       </li>
     );

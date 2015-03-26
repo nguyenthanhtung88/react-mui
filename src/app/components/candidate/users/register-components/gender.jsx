@@ -20,7 +20,7 @@ var RegisterGender = React.createClass({
     return (
       <li className={this.props.stepClassname}>
         <div className="fs-field-label fs-anim-upper">
-          Are you he or she?
+          Are you male or female?
         </div>
 
         <div className="fs-anim-lower fs-gender-wrap">

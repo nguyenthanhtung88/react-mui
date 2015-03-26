@@ -1,7 +1,8 @@
 var React = require('react'),
   mui = require('material-ui'),
   TextField = mui.TextField,
-  DropDownMenu = mui.DropDownMenu;
+  DropDownMenu = mui.DropDownMenu,
+  ButtonNext = require('./button-next.jsx');
 
 var SkillsLanguage = React.createClass({
   componentDidMount: function() {
@@ -31,7 +32,9 @@ var SkillsLanguage = React.createClass({
             menuItems={skillLanguages} /><br/>
           <TextField
             name="skills[language][scores][]"
-            hintText="Score" />
+            hintText="Score" /><br/>
+
+          <ButtonNext disabled={!this.props.checkStep(this.props.step)} onTouchTap={this.props.gotoNextStep} />
         </div>
       </li>
     );

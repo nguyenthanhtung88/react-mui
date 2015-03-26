@@ -1,7 +1,8 @@
 var React = require('react'),
   mui = require('material-ui'),
   TextField = mui.TextField,
-  DropDownMenu = mui.DropDownMenu;
+  DropDownMenu = mui.DropDownMenu,
+  ButtonNext = require('./button-next.jsx');
 
 var Other = React.createClass({
   componentDidMount: function() {
@@ -32,6 +33,8 @@ var Other = React.createClass({
           <TextField
             name="skills[other][scores][]"
             hintText="Score" />
+
+          <ButtonNext disabled={!this.props.checkStep(this.props.step)} onTouchTap={this.props.gotoNextStep} />
         </div>
       </li>
     );

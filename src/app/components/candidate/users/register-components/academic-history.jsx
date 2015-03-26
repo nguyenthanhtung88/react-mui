@@ -1,42 +1,44 @@
 var React = require('react'),
   mui = require('material-ui'),
-  DropDownMenu = mui.DropDownMenu;
+  Select = require('react-select'),
+  DropDownMenu = mui.DropDownMenu,
+  ButtonNext = require('./button-next.jsx');
 
 var AcademicHistory = React.createClass({
   componentDidMount: function() {
     this.props.markStep(this.props.step, true);
   },
+  _handleOnChange: function(value) {
+
+  },
   render: function() {
-    var highschoolItems = [
-      { payload: '0', text: 'None' },
-      { payload: '1', text: 'Highschool 1' },
-      { payload: '2', text: 'Highschool 2' },
-      { payload: '3', text: 'Highschool 3' },
-      { payload: '4', text: 'Highschool 4' },
+    var highschoolOptions = [
+      { value: '1', label: 'Highschool One' },
+      { value: '2', label: 'Highschool Two' },
+      { value: '3', label: 'Highschool Three' },
+      { value: '4', label: 'Highschool Four' }
     ];
 
-    var bachelorItems = [
-      { payload: '0', text: 'None' },
-      { payload: '1', text: 'Bachelor 1' },
-      { payload: '2', text: 'Bachelor 2' },
-      { payload: '3', text: 'Bachelor 3' },
-      { payload: '4', text: 'Bachelor 4' },
+    var bachelorOptions = [
+      { value: '1', label: 'Bachelor One' },
+      { value: '2', label: 'Bachelor Two' },
+      { value: '3', label: 'Bachelor Three' },
+      { value: '4', label: 'Bachelor Four' },
     ];
 
-    var masterItems = [
-      { payload: '0', text: 'None' },
-      { payload: '1', text: 'Master 1' },
-      { payload: '2', text: 'Master 2' },
-      { payload: '3', text: 'Master 3' },
-      { payload: '4', text: 'Master 4' },
+    var masterOptions = [
+      { value: '1', label: 'Master One' },
+      { value: '2', label: 'Master Two' },
+      { value: '3', label: 'Master Three' },
+      { value: '4', label: 'Master Four' },
     ];
 
     var doctorItems = [
       { payload: '0', text: 'None' },
-      { payload: '1', text: 'Doctor 1' },
-      { payload: '2', text: 'Doctor 2' },
-      { payload: '3', text: 'Doctor 3' },
-      { payload: '4', text: 'Doctor 4' },
+      { payload: '1', text: 'Doctor One' },
+      { payload: '2', text: 'Doctor Two' },
+      { payload: '3', text: 'Doctor Three' },
+      { payload: '4', text: 'Doctor Four' },
     ];
 
     return (
@@ -45,24 +47,32 @@ var AcademicHistory = React.createClass({
 
         <div className="fs-anim-lower">
           <div className="fs-field-input">Highschool Name</div>
-          <DropDownMenu
+          <Select
             name="m_highschool_id"
-            menuItems={highschoolItems} /><br/>
+            value=""
+            options={highschoolOptions}
+            onChange={this._handleOnChange} /><br/>
 
           <div className="fs-field-input">Bachelor Name</div>
-          <DropDownMenu
+          <Select
             name="m_bachelor_id"
-            menuItems={bachelorItems} /><br/>
+            value=""
+            options={bachelorOptions}
+            onChange={this._handleOnChange} /><br/>
 
           <div className="fs-field-input">Master Course Name</div>
-          <DropDownMenu
+          <Select
             name="m_master_id"
-            menuItems={masterItems} /><br/>
+            value=""
+            options={masterOptions}
+            onChange={this._handleOnChange} /><br/>
 
           <div className="fs-field-input">Doctor Course Name</div>
           <DropDownMenu
             name="m_doctor_id"
             menuItems={doctorItems} /><br/>
+
+          <ButtonNext disabled={!this.props.checkStep(this.props.step)} onTouchTap={this.props.gotoNextStep} />
         </div>
       </li>
     );

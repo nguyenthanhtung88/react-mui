@@ -6,11 +6,12 @@ var React = require('react'),
   RegisterGender = require('./register-components/gender.jsx'),
   AcademicHistory = require('./register-components/academic-history.jsx'),
   SkillsLanguage = require('./register-components/skills-language.jsx'),
+  LogicalIT = require('./register-components/logical-it.jsx'),
   SkillsIT = require('./register-components/skills-it.jsx'),
   WorkExperience = require('./register-components/work-experience.jsx'),
   Other = require('./register-components/other.jsx'),
   NavLinks = require('./register-components/nav-links.jsx'),
-  ProgressBar = require('./register-components/progress-bar.jsx'),
+  ProgressBar = require('./register-components/progress-bar.jsx')
   RaisedButton = mui.RaisedButton;
 
 var controlLinks = [
@@ -19,6 +20,7 @@ var controlLinks = [
   {text: 'Gender'},
   {text: 'Academic History'},
   {text: 'Skills (Language)'},
+  {text: 'Logical and IT'},
   {text: 'Skills (IT)'},
   {text: 'Work Experience'},
   {text: 'Other'}
@@ -30,11 +32,12 @@ var CandidateRegister = React.createClass({
     return {
       currentStep: 1,
       lastStep: 1,
-      maxStep: 8,
+      maxStep: 9,
       progressStep: 1,
       textButton: 'next',
       hideButton: true,
-      stepMarked: []
+      stepMarked: [],
+      currentPercent: 70
     }
   },
   componentDidMount: function() {
@@ -45,7 +48,7 @@ var CandidateRegister = React.createClass({
   },
   _handleKeyDown: function(e) {
     var keyCode = e.keyCode || e.which;
-    if (keyCode == 13 && this.checkStep(this.state.currentStep)) {
+    if (keyCode == 13 && this.checkStep(this.state.currentStep) && (e.target.parentElement.className != "Select-input")) {
       e.preventDefault();
       this._handleTouchTap();
     };
@@ -70,7 +73,7 @@ var CandidateRegister = React.createClass({
     return "fs-step" + (this.state.currentStep == numStep ? ' fs-current fs-show' : this.state.lastStep == numStep ? ' fs-hide' : '');
   },
   checkStep: function(step) {
-    // return true;
+    return true;
     return (this.state.stepMarked.hasOwnProperty(step) && this.state.stepMarked[step]);
   },
   handleNavStepChange: function(nextStep) {
@@ -95,26 +98,20 @@ var CandidateRegister = React.createClass({
         <div className={"fs-form-wrap" + (this.checkStep(this.state.currentStep) ? ' fs-enable-bg' : ' fs-disable-bg')}>
           <div className="fs-form fs-form-full">
               <ol className={"fs-fields" + (this.state.lastStep < this.state.currentStep ? ' fs-display-next' : ' fs-display-prev')}>
-                <RegisterName stepClassname={this._getStepClassname(1)} markStep={this.markStep} step={1} />
-                <RegisterBirthday stepClassname={this._getStepClassname(2)} markStep={this.markStep} step={2} />
-                <RegisterGender stepClassname={this._getStepClassname(3)} markStep={this.markStep} step={3} gotoNextStep={this._handleTouchTap} />
-                <AcademicHistory stepClassname={this._getStepClassname(4)} markStep={this.markStep} step={4} />
-                <SkillsLanguage stepClassname={this._getStepClassname(5)} markStep={this.markStep} step={5} />
-                <SkillsIT stepClassname={this._getStepClassname(6)} markStep={this.markStep} step={6} />
-                <WorkExperience stepClassname={this._getStepClassname(7)} markStep={this.markStep} step={7} />
-                <Other stepClassname={this._getStepClassname(8)} markStep={this.markStep} step={8} />
+                <RegisterName stepClassname={this._getStepClassname(1)} markStep={this.markStep} step={1} gotoNextStep={this._handleTouchTap} checkStep={this.checkStep} />
+                <RegisterBirthday stepClassname={this._getStepClassname(2)} markStep={this.markStep} step={2} gotoNextStep={this._handleTouchTap} checkStep={this.checkStep} />
+                <RegisterGender stepClassname={this._getStepClassname(3)} markStep={this.markStep} step={3} gotoNextStep={this._handleTouchTap} checkStep={this.checkStep} />
+                <AcademicHistory stepClassname={this._getStepClassname(4)} markStep={this.markStep} step={4} gotoNextStep={this._handleTouchTap} checkStep={this.checkStep} />
+                <SkillsLanguage stepClassname={this._getStepClassname(5)} markStep={this.markStep} step={5} gotoNextStep={this._handleTouchTap} checkStep={this.checkStep} />
+                <LogicalIT stepClassname={this._getStepClassname(6)} markStep={this.markStep} step={6} gotoNextStep={this._handleTouchTap} checkStep={this.checkStep} />
+                <SkillsIT stepClassname={this._getStepClassname(7)} markStep={this.markStep} step={7} gotoNextStep={this._handleTouchTap} checkStep={this.checkStep} />
+                <WorkExperience stepClassname={this._getStepClassname(8)} markStep={this.markStep} step={8} gotoNextStep={this._handleTouchTap} checkStep={this.checkStep} />
+                <Other stepClassname={this._getStepClassname(9)} markStep={this.markStep} step={9} gotoNextStep={this._handleTouchTap} checkStep={this.checkStep} />
               </ol>
           </div>
 
-          <div >
-            <button className={"fs-continue-btn" + (this.checkStep(this.state.currentStep) ? ' fs-btn-show' : ' fs-btn-hide')} onTouchTap={this._handleTouchTap} >
-              <span className="fs-next">{this.state.textButton}</span>
-              <br/>
-              <span className="fs-enter">Click enter-key</span>
-            </button>
-          </div>
-
           <div className="fs-controls">
+            <ProgressBar percent={this.state.currentPercent} />
             <NavLinks data={controlLinks} currentStep={this.state.currentStep} progressStep={this.state.progressStep} requestChange={this.handleNavStepChange} />
           </div>
         </div>

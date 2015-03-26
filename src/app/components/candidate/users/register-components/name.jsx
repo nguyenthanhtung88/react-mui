@@ -1,6 +1,7 @@
 var React = require('react'),
   mui = require('material-ui'),
-  TextField = mui.TextField;
+  TextField = mui.TextField,
+  ButtonNext = require('./button-next.jsx');
 
 var ValidationMixin = require('react-validation-mixin');
 var Joi = require('joi');
@@ -96,7 +97,9 @@ var RegisterName = React.createClass({
           <TextField
             name="name_kana"
             errorText={this.getErrorText('name_kana')}
-            onChange={this._handleInputChange} />
+            onChange={this._handleInputChange} /><br/>
+
+          <ButtonNext disabled={!this.props.checkStep(this.props.step)} onTouchTap={this.props.gotoNextStep} />
         </div>
       </li>
     );
