@@ -128,13 +128,13 @@ $circle-border-size: 10px;
                 @include transform-rotate($angle);
             }
         }
-        @else 
+        @else
         {
             $angle: -90 + (($progress - 75)/100)*360;
             .animate-50-75-b, .animate-25-50-b, .animate-0-25-b {
                 @include transform-rotate(0);
             }
-            .animate-50-75-b {
+            .animate-75-100-b {
                 @include transform-rotate($angle);
             }
         }

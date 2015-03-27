@@ -101,6 +101,14 @@
       .fs-company-history {
         margin: 10px 0;
       }
+
+      .fs-academic-history-block {
+        display: none;
+
+        &.fs-academic-show {
+          display: block;
+        }
+      }
     }
 
     .fs-current {
@@ -119,6 +127,23 @@
     margin: 10px 0;
 
     .fs-next {
+      font-size: xx-large;
+    }
+
+    .fs-enter {
+      font-size: small;
+    }
+  }
+
+  .fs-skip-btn {
+    background-color: transparent;
+    border: 1px solid $grey-50;
+    padding: 0 20px 10px 20px;
+    font-weight: bold;
+    margin: 10px 0;
+    // display: inline-block;
+
+    .fs-skip-text {
       font-size: xx-large;
     }
 

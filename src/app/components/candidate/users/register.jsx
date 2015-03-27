@@ -27,7 +27,11 @@ var controlLinks = [
 ]
 
 var CandidateRegister = React.createClass({
-
+  getDefaultProps: function() {
+    return {
+      percentStepMap: [0, 10, 20, 30, 50, 60, 70, 80, 90, 100]
+    }
+  },
   getInitialState: function() {
     return {
       currentStep: 1,
@@ -37,7 +41,7 @@ var CandidateRegister = React.createClass({
       textButton: 'next',
       hideButton: true,
       stepMarked: [],
-      currentPercent: 70
+      currentPercent: 0
     }
   },
   componentDidMount: function() {
@@ -55,16 +59,19 @@ var CandidateRegister = React.createClass({
   },
   _handleTouchTap: function() {
     var nextStep = (this.state.currentStep + 1) > this.state.maxStep ? 0 : this.state.currentStep + 1;
+    var progressStep = (nextStep > this.state.progressStep) ? nextStep : this.state.progressStep;
 
     if (!nextStep) {
+      this.setState({currentPercent: 100});
       alert('Done ...');
       return false;
     };
 
     this.setState({
       currentStep: nextStep,
-      progressStep: (nextStep > this.state.progressStep) ? nextStep : this.state.progressStep,
+      progressStep: progressStep,
       lastStep: this.state.currentStep,
+      currentPercent: this.props.percentStepMap[progressStep - 1],
       textButton: nextStep == this.state.maxStep ? 'Submit' : 'next'
     });
 
@@ -73,7 +80,7 @@ var CandidateRegister = React.createClass({
     return "fs-step" + (this.state.currentStep == numStep ? ' fs-current fs-show' : this.state.lastStep == numStep ? ' fs-hide' : '');
   },
   checkStep: function(step) {
-    return true;
+    // return true;
     return (this.state.stepMarked.hasOwnProperty(step) && this.state.stepMarked[step]);
   },
   handleNavStepChange: function(nextStep) {
