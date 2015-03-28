@@ -1,6 +1,8 @@
 var React = require('react'),
   mui = require('material-ui'),
   Select = require('react-select'),
+  ReactWidgets = require('react-widgets'),
+  Combobox = ReactWidgets.Combobox,
   TextField = mui.TextField,
   DropDownMenu = mui.DropDownMenu,
   Slider = mui.Slider,
@@ -34,55 +36,69 @@ var SkillsIT = React.createClass({
 
     this.setState({its: currentITList});
   },
+  _handleOnChange: function(value) {    
+    var currentIts = this.state.its;
+
+    currentIts[0].id = (typeof value === 'object') ? value.id : null;
+    currentIts[0].name = (typeof value === 'object') ? value.name : value;
+
+    this.setState({its: currentIts});
+  },
+  _handleDropDownChange: function(e, selectedIndex, menuItem) {
+    var currentIts = this.state.its;
+
+    currentIts[0].score = menuItem.payload;
+
+    this.setState({its: currentIts});
+  },
+  _handleTouchTap: function() {
+    this.props.updateFormData({its: this.state.its});
+    this.props.gotoNextStep();
+  },
   render: function() {
-    var skillITOptions = [
-      {value: "1", label: "Java"},
-      {value: "2", label: "PHP"},
-      {value: "3", label: "Ruby"},
-      {value: "4", label: "CakePHP"},
-      {value: "5", label: "Yii"},
-      {value: "6", label: "Laravel"},
-      {value: "7", label: ".NET Framework"},
-      {value: "8", label: "AngularJS"},
-      {value: "9", label: "OpenGL"},
-      {value: "10", label: "Cocos2d"}
+    var skillITs = [
+      {id: 1, name: "Java"},
+      {id: 2, name: "PHP"},
+      {id: 3, name: "Ruby"},
+      {id: 4, name: "CakePHP"},
+      {id: 5, name: "Yii"},
+      {id: 6, name: "Laravel"},
+      {id: 7, name: ".NET Framework"},
+      {id: 8, name: "AngularJS"},
+      {id: 9, name: "OpenGL"},
+      {id: 10, name: "Cocos2d"}
     ];
 
-    var itLists = this.state.its.map(function(it, index) {
-      var deleteBtn = this.state.its.length > 1 ?
-        <RaisedButton label="Remove" primary={true} onTouchTap={this._handleRemoveClick.bind(this, index)} /> :
-        <div>&nbsp;</div>;
-
-      return (
-        <div key={index} className="fs-company-history">
-          <Select
-            name="skills[it][ids][]"
-            options={skillITOptions}
-            placeholder="Select IT Skill..." />
-
-          <div className="fs-slider-area">
-            <div className="fs-field-label-score">Score</div>
-            <Slider
-                name="skills[id][score][]"
-                defaultValue={0.5} />
-            <div className="fs-field-slider-value"></div>
-          </div>
-
-          {deleteBtn}
-        </div>
-      );
-    }.bind(this));
+    var itLevels = [
+      {payload: 0, text: "No experience"},
+      {payload: 10, text: "Less than 6 months"},
+      {payload: 30, text: "More than 6 months"},
+      {payload: 50, text: "More than 1 year"},
+      {payload: 70, text: "More than 1.5 years"},
+      {payload: 90, text: "More than 2 years"}
+    ];
 
     return (
       <li className={this.props.stepClassname}>
         <label className="fs-field-label fs-anim-upper">Skills (IT)</label>
 
         <div className="fs-anim-lower">
-          {itLists}
+          <div className="fs-company-history">
+            <div className="fs-half-block">
+              <Combobox 
+                valueField='id' textField='name'
+                data={skillITs}
+                filter="contains"
+                placeholder="Select IT Skill..."
+                onChange={this._handleOnChange} />
+            </div>
+            
+            <DropDownMenu
+              menuItems={itLevels}
+              onChange={this._handleDropDownChange} />
+          </div>
 
-          <RaisedButton label="Add more" secondary={true} onTouchTap={this._handleAddMoreClick} />
-
-          <ButtonNext disabled={!this.props.checkStep(this.props.step)} onTouchTap={this.props.gotoNextStep} />
+          <ButtonNext disabled={!this.props.checkStep(this.props.step)} onTouchTap={this._handleTouchTap} />
         </div>
       </li>
     );

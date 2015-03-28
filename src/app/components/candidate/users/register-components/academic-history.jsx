@@ -1,6 +1,8 @@
 var React = require('react'),
   mui = require('material-ui'),
   Select = require('react-select'),
+  ReactWidgets = require('react-widgets'),
+  Combobox = ReactWidgets.Combobox,
   DropDownMenu = mui.DropDownMenu,
   TextField = mui.TextField,
   ButtonNext = require('./button-next.jsx'),
@@ -22,14 +24,19 @@ var AcademicHistory = React.createClass({
       done: false,
       marked: [null, false, false, true, true],
       highschool_name: "",
+      m_highschool_id: null,
       bachelor_name: "",
+      m_bachelor_id: null,
       master_name: "",
-      doctor_name: ""
+      m_master_id: null,
+      doctor_name: "",
+      m_doctor_id: null
     }
   },
-  _handleInputChange: function(ref, step, e) {
+  _handleInputChange: function(ref, step, value) {
     var currentState = this.state;
-    currentState[ref + '_name'] = e.target.value;
+    currentState[ref + '_name'] = (typeof value === 'object') ? value.name : value;
+    currentState['m_' + ref + '_id'] = (typeof value === 'object') ? value.id : null;
 
     this.setState(currentState);
 
@@ -68,7 +75,8 @@ var AcademicHistory = React.createClass({
       return false;
     };
 
-    if (nextStep == this.state.maxStep && this.state.done) {
+    if (this.state.currentStep == this.state.maxStep && this.state.done) {
+      this.props.updateFormData(this._prepareTransferFormData());
       this.props.gotoNextStep();
     };
 
@@ -78,8 +86,29 @@ var AcademicHistory = React.createClass({
   },
   _handleSkipButton: function(e) {
     if (this.state.done) {
+      this.props.updateFormData(this._prepareTransferFormData());
       this.props.gotoNextStep();
     };
+  },
+  _prepareTransferFormData: function() {
+    return {
+      highschool: {
+        id: this.state.m_highschool_id,
+        name: this.state.highschool_name
+      },
+      bachelor: {
+        id: this.state.m_bachelor_id,
+        name: this.state.bachelor_name
+      },
+      master: {
+        id: this.state.m_master_id,
+        name: this.state.master_name
+      },
+      doctor: {
+        id: this.state.m_doctor_id,
+        name: this.state.doctor_name
+      }
+    }
   },
   checkStep: function(step) {
     return (this.state.marked.hasOwnProperty(step) && this.state.marked[step]);
@@ -89,32 +118,31 @@ var AcademicHistory = React.createClass({
   },
   render: function() {
     var highschoolOptions = [
-      { value: '1', label: 'Highschool One' },
-      { value: '2', label: 'Highschool Two' },
-      { value: '3', label: 'Highschool Three' },
-      { value: '4', label: 'Highschool Four' }
+      { id: 1, name: 'Highschool One' },
+      { id: 2, name: 'Highschool Two' },
+      { id: 3, name: 'Highschool Three' },
+      { id: 4, name: 'Highschool Four' }
     ];
 
     var bachelorOptions = [
-      { value: '1', label: 'Bachelor One' },
-      { value: '2', label: 'Bachelor Two' },
-      { value: '3', label: 'Bachelor Three' },
-      { value: '4', label: 'Bachelor Four' },
+      { id: 1, name: 'Bachelor One' },
+      { id: 2, name: 'Bachelor Two' },
+      { id: 3, name: 'Bachelor Three' },
+      { id: 4, name: 'Bachelor Four' },
     ];
 
     var masterOptions = [
-      { value: '1', label: 'Master One' },
-      { value: '2', label: 'Master Two' },
-      { value: '3', label: 'Master Three' },
-      { value: '4', label: 'Master Four' },
+      { id: 1, name: 'Master One' },
+      { id: 2, name: 'Master Two' },
+      { id: 3, name: 'Master Three' },
+      { id: 4, name: 'Master Four' },
     ];
 
-    var doctorItems = [
-      { payload: '0', text: 'None' },
-      { payload: '1', text: 'Doctor One' },
-      { payload: '2', text: 'Doctor Two' },
-      { payload: '3', text: 'Doctor Three' },
-      { payload: '4', text: 'Doctor Four' },
+    var doctorOptions = [
+      { id: 1, name: 'Doctor One' },
+      { id: 2, name: 'Doctor Two' },
+      { id: 3, name: 'Doctor Three' },
+      { id: 4, name: 'Doctor Four' },
     ];
 
     return (
@@ -126,14 +154,16 @@ var AcademicHistory = React.createClass({
           </div>
 
           <div className="fs-anim-lower">
-            <TextField
-              name="highschool_name"
-              hintText="Your highschool name"
-              ref="highschool_name"
-              onChange={this._handleInputChange.bind(this, 'highschool', 1)} /><br/>
-
-            <input ref="highschool_id" name="m_highschool_id" value="" type="hidden" />
-
+            <div className="fs-company-history">
+              <Combobox 
+                valueField='id' textField='name'
+                data={highschoolOptions}
+                filter="contains"
+                placeholder="Your highschool name"              
+                ref="highschool_name"
+                onChange={this._handleInputChange.bind(this, 'highschool', 1)} />
+            </div>
+            
             <ButtonNext disabled={!this.checkStep(this.state.currentStep)} onTouchTap={this._handleTouchTap} />
           </div>
         </div>
@@ -145,13 +175,15 @@ var AcademicHistory = React.createClass({
           </div>
 
           <div className="fs-anim-lower">
-            <TextField
-              name="bachelor_name"
-              hintText="Your university name"
-              ref="bachelor_name"
-              onChange={this._handleInputChange.bind(this, 'bachelor', 2)} /><br/>
-
-            <input ref="bachelor_id" name="m_bachelor_id" value="" type="hidden" />
+            <div className="fs-company-history">
+              <Combobox 
+                valueField='id' textField='name'
+                data={bachelorOptions}
+                filter="contains"
+                placeholder="Your university name"              
+                ref="bachelor_name"
+                onChange={this._handleInputChange.bind(this, 'bachelor', 2)} />
+            </div>
 
             <ButtonNext disabled={!this.checkStep(this.state.currentStep)} onTouchTap={this._handleTouchTap} />
           </div>
@@ -163,14 +195,16 @@ var AcademicHistory = React.createClass({
           </div>
 
           <div className="fs-anim-lower">
-            <TextField
-              name="master_name"
-              hintText="Your course name"
-              ref="bachelor_name"
-              onChange={this._handleInputChange.bind(this, 'master', 3)} />
-
-            <input ref="master_id" name="m_master_id" value="" type="hidden" /><br/>
-
+            <div className="fs-company-history">
+              <Combobox 
+                valueField='id' textField='name'
+                data={masterOptions}
+                filter="contains"
+                placeholder="Your master course name"              
+                ref="master_name"
+                onChange={this._handleInputChange.bind(this, 'master', 3)} />
+            </div>
+            
             <ButtonSkip disabled={false} onTouchTap={this._handleSkipButton} />
             <ButtonNext disabled={!this.checkStep(this.state.currentStep)} onTouchTap={this._handleTouchTap} />
           </div>
@@ -182,14 +216,16 @@ var AcademicHistory = React.createClass({
           </div>
 
           <div className="fs-anim-lower">
-            <TextField
-              name="doctor_name"
-              hintText="Your course name"
-              ref="doctor_name"
-              onChange={this._handleInputChange.bind(this, 'doctor', 4)} />
-
-            <input ref="doctor_id" name="m_doctor_id" value="" type="hidden" /><br/>
-
+            <div className="fs-company-history">
+              <Combobox 
+                valueField='id' textField='name'
+                data={doctorOptions}
+                filter="contains"
+                placeholder="Your doctor course name"              
+                ref="doctor_name"
+                onChange={this._handleInputChange.bind(this, 'doctor', 4)} />
+              </div>
+            
             <ButtonSkip disabled={false} onTouchTap={this._handleSkipButton} />
             <ButtonNext disabled={!this.checkStep(this.state.currentStep)} onTouchTap={this._handleTouchTap} />
           </div>

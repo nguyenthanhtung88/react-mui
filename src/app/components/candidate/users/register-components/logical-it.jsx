@@ -23,6 +23,16 @@ var LogicalIT = React.createClass({
         this.setState({itPoint:  newITPoint});
         this.props.markStep(this.props.step, (newITPoint && this.state.logicalPoint));
     },
+    _handleTouchTap: function() {
+        var transferFormData = {
+            logicalIT: [
+                {id: null, name: 'Logical', score: this.state.logicalPoint},
+                {id: null, name: 'IT Subject', score: this.state.itPoint}
+            ]
+        };
+        this.props.updateFormData(transferFormData);
+        this.props.gotoNextStep();
+    },
     render: function() {
         return (
             <li className={this.props.stepClassname}>
@@ -47,7 +57,7 @@ var LogicalIT = React.createClass({
                     <div className="fs-field-slider-value">{this.state.itPoint}</div>
                 </div>
 
-                <ButtonNext disabled={!this.props.checkStep(this.props.step)} onTouchTap={this.props.gotoNextStep} />
+                <ButtonNext disabled={!this.props.checkStep(this.props.step)} onTouchTap={this._handleTouchTap} />
             </div>
           </li>
         );

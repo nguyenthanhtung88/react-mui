@@ -8,7 +8,20 @@ var SkillsLanguage = React.createClass({
   getInitialState: function() {
     return {
       currentStep: 1,
-      maxStep: 1
+      maxStep: 1,
+      languages: [],
+      skillLanguages: [
+        {id: 1, name: "English"},
+        {id: 2, name: "Chinese Cantonese"},
+        {id: 3, name: "Chinese Shanghainese"},
+        {id: 4, name: "Japanese"},
+        {id: 5, name: "Vietnamese"},
+        {id: 6, name: "Korean"},
+        {id: 7, name: "Persian"},
+        {id: 8, name: "Burmese"},
+        {id: 9, name: "Nepali"},
+        {id: 10, name: "Kurdish"}
+      ]
     }
   },
   componentDidMount: function() {
@@ -18,6 +31,7 @@ var SkillsLanguage = React.createClass({
     var nextStep = (this.state.currentStep + 1) > this.state.maxStep ? this.state.maxStep : this.state.currentStep + 1;
 
     if (this.state.currentStep == this.state.maxStep) {
+      this.props.updateFormData({languages: this.state.languages});
       this.props.gotoNextStep();
     };
 
@@ -28,28 +42,35 @@ var SkillsLanguage = React.createClass({
   _getStepClassname: function(numStep) {
     return "fs-academic-history-block" + (this.state.currentStep == numStep ? ' fs-academic-show' : '');
   },
-  render: function() {
-    var skillLanguages = [
-      {payload: "0", text: "Choose Language"},
-      {payload: "1", text: "English"},
-      {payload: "2", text: "Chinese Cantonese"},
-      {payload: "3", text: "Chinese Shanghainese"},
-      {payload: "4", text: "Japanese"},
-      {payload: "5", text: "Vietnamese"},
-      {payload: "6", text: "Korean"},
-      {payload: "7", text: "Persian"},
-      {payload: "8", text: "Burmese"},
-      {payload: "9", text: "Nepali"},
-      {payload: "10", text: "Kurdish"}
-    ];
+  _findLanguageObject: function(textLanguage) {
+    for (var i = 0; i < this.state.skillLanguages.length; i++) {
+      if (this.state.skillLanguages[i].name == textLanguage) {
+        return this.state.skillLanguages[i];
+      }
+    };
 
+    return null;
+  },
+  _handleDropDownChange: function(ref, e, selectedIndex, menuItem) {
+    var objectLanguage = this._findLanguageObject(ref);
+    objectLanguage.score = menuItem.payload;
+
+    var currentLanguages = this.state.languages;
+
+    var index = (ref == 'English') ? 0 : 1;
+
+    currentLanguages[index] = objectLanguage;
+
+    this.setState({languages: currentLanguages});
+  },
+  render: function() {
     var skillLevels = [
-      {payload: "0", text: "Cannot"},
-      {payload: "10", text: "Basic conversation"},
-      {payload: "30", text: "Everyday conversation"},
-      {payload: "50", text: "Business Conversation"},
-      {payload: "80", text: "Fluent"},
-      {payload: "100", text: "Native"}
+      {payload: 0, text: "Cannot"},
+      {payload: 10, text: "Basic conversation"},
+      {payload: 30, text: "Everyday conversation"},
+      {payload: 50, text: "Business Conversation"},
+      {payload: 80, text: "Fluent"},
+      {payload: 100, text: "Native"}
     ];
 
     return (
@@ -62,16 +83,14 @@ var SkillsLanguage = React.createClass({
 
           <div className="fs-anim-lower">
             <div className="fs-field-label-register-name">English</div>
-            <input ref="language_id" name="skills[language][ids][]" value="1" type="hidden" />
-
             <DropDownMenu
-              menuItems={skillLevels} /><br/>
+              menuItems={skillLevels}
+              onChange={this._handleDropDownChange.bind(this, 'English')} /><br/>
 
             <div className="fs-field-label-register-name">Japanese</div>
-            <input ref="language_id" name="skills[language][ids][]" value="2" type="hidden" />
-
             <DropDownMenu
-              menuItems={skillLevels} />
+              menuItems={skillLevels}
+              onChange={this._handleDropDownChange.bind(this, 'Japanese')} />
 
             <ButtonNext disabled={false} onTouchTap={this._handleTouchTap} />
           </div>

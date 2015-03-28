@@ -30,6 +30,18 @@ var RegisterName = React.createClass({
 
     return textMessage;
   },
+  _handleTouchTap: function() {
+    var transferFormData = {
+      first_name: this.state.first_name,
+      middle_name: this.state.middle_name,
+      last_name: this.state.last_name,
+      name_kana: this.state.name_kana
+    };
+
+    this.props.updateFormData(transferFormData);
+
+    this.props.gotoNextStep();
+  },
   _handleInputChange: function(e) {
     var currentState = this.state;
     currentState[e.target.name] = e.target.value;
@@ -99,7 +111,7 @@ var RegisterName = React.createClass({
             errorText={this.getErrorText('name_kana')}
             onChange={this._handleInputChange} /><br/>
 
-          <ButtonNext disabled={!this.props.checkStep(this.props.step)} onTouchTap={this.props.gotoNextStep} />
+          <ButtonNext disabled={!this.props.checkStep(this.props.step)} onTouchTap={this._handleTouchTap} />
         </div>
       </li>
     );

@@ -68,6 +68,15 @@ var RegisterBirthday = React.createClass({
 
     return textMessage;
   },
+  _handleTouchTap: function() {
+    var transferFormData = {
+      birthday: this.state.birthday_year + "-" + this.state.birthday_month + "-" + this.state.birthday_day
+    };
+
+    this.props.updateFormData(transferFormData);
+
+    this.props.gotoNextStep();
+  },
   _handleInputYearChange: function(e, selectedIndex, menuItem) {
     this.setState({birthday_year: menuItem.payload});
     this.validate('birthday_year', this.doValidate);
@@ -129,7 +138,7 @@ var RegisterBirthday = React.createClass({
             menuItems={this._getDayLists()}
             onChange={this._handleInputDayChange} /><br/>
 
-          <ButtonNext disabled={!this.props.checkStep(this.props.step)} onTouchTap={this.props.gotoNextStep} />
+          <ButtonNext disabled={!this.props.checkStep(this.props.step)} onTouchTap={this._handleTouchTap} />
         </div>
       </li>
     );

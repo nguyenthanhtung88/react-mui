@@ -14,6 +14,8 @@ var RegisterGender = React.createClass({
     this.setState({gender: genderValue});
 
     this.props.markStep(this.props.step, true);
+
+    this.props.updateFormData({gender: genderValue});
     this.props.gotoNextStep();
   },
   render: function() {
@@ -32,7 +34,6 @@ var RegisterGender = React.createClass({
             I am female<br/>
             <img src="images/woman.png" />
           </div>
-          <input type="hidden" value={this.state.gender} />
         </div>
       </li>
     );

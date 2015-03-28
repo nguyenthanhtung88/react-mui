@@ -1,6 +1,8 @@
 var React = require('react'),
   mui = require('material-ui'),
   Select = require('react-select'),
+  ReactWidgets = require('react-widgets'),
+  Combobox = ReactWidgets.Combobox,
   TextField = mui.TextField,
   RaisedButton = mui.RaisedButton,
   DropDownMenu = mui.DropDownMenu,
@@ -30,7 +32,18 @@ var WorkExperience = React.createClass({
     this.setState({companies: currentCompanyList});
   },
   _handleChangeStartedDate: function(e, value) {
-    console.log(value);
+    var currentCompanies = this.state.companies;
+
+    currentCompanies[0].started_at = this._formatDate(value);
+
+    this.setState({companies: currentCompanies});
+  },
+  _handleChangeFinishedDate: function(e, value) {
+    var currentCompanies = this.state.companies;
+
+    currentCompanies[0].finished_at = this._formatDate(value);
+
+    this.setState({companies: currentCompanies});
   },
   _handleRemoveClick: function(index) {
     var currentCompanyList = this.state.companies;
@@ -38,57 +51,65 @@ var WorkExperience = React.createClass({
 
     this.setState({companies: currentCompanyList});
   },
+  _handleOnChange: function(value) {
+    var currentCompanies = this.state.companies;
+
+    currentCompanies[0].id = (typeof value === 'object') ? value.id : null;
+    currentCompanies[0].name = (typeof value === 'object') ? value.name : value;
+
+    this.setState({companies: currentCompanies});
+  },
+  _formatDate: function(date) {
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+
+    return year + "-" + month + "-" + day;
+  },
+  _handleTouchTap: function() {
+    this.props.updateFormData({work_experiences: this.state.companies});
+    this.props.gotoNextStep();
+  },
   render: function() {
     var companyOptions = [
-      {value: "1", label: "Framgia"},
-      {value: "2", label: "Zboncak-Tillman"},
-      {value: "3", label: "O'Hara Ltd"},
-      {value: "4", label: "Ankunding LLC"},
-      {value: "5", label: "Abernathy PLC"},
-      {value: "6", label: "Padberg-Bechtelar"},
-      {value: "7", label: "Kemmer Inc"},
-      {value: "8", label: "Lehner-Ritchie"},
-      {value: "9", label: "Altenwerth-Hansen"},
-      {value: "10", label: "Torp Group"}
+      {id: 1, name: "Framgia"},
+      {id: 2, name: "Zboncak-Tillman"},
+      {id: 3, name: "O'Hara Ltd"},
+      {id: 4, name: "Ankunding LLC"},
+      {id: 5, name: "Abernathy PLC"},
+      {id: 6, name: "Padberg-Bechtelar"},
+      {id: 7, name: "Kemmer Inc"},
+      {id: 8, name: "Lehner-Ritchie"},
+      {id: 9, name: "Altenwerth-Hansen"},
+      {id: 10, name: "Torp Group"}
     ];
-
-    var companyList = this.state.companies.map(function(company, index) {
-      var deleteBtn = this.state.companies.length > 1 ?
-        <RaisedButton label="Remove" primary={true} onTouchTap={this._handleRemoveClick.bind(this, index)} /> :
-        <div>&nbsp;</div>;
-
-      return (
-        <div key={index} className="fs-company-history">
-          <Select
-            name="companies[ids][]"
-            value={company.id}
-            options={companyOptions}
-            placeholder="Select Company..." />
-
-          <div className="fs-field-label-register-name">Started Date</div>
-          <DatePicker
-            name="companies[started_at][]"
-            onChange={this._handleChangeStartedDate} /><br/>
-
-          <div className="fs-field-label-register-name">Finished Date</div>
-          <DatePicker
-            name="companies[finished_at][]" /><br/>
-
-          {deleteBtn}
-        </div>
-      );
-    }.bind(this));
-
+    
     return (
       <li className={this.props.stepClassname}>
         <label className="fs-field-label fs-anim-upper">What companies did you work for?</label>
 
         <div className="fs-anim-lower">
-          {companyList}
+          <div className="fs-company-history">
+            <Combobox 
+              valueField='id' textField='name'
+              data={companyOptions}
+              filter="contains"
+              placeholder="Select Company..."
+              onChange={this._handleOnChange} />
 
-          <RaisedButton label="Add more" secondary={true} onTouchTap={this._handleAddMoreClick} />
+            <div className="fs-field-label-register-name">Started Date</div>
+            <DatePicker
+              formatDate={this._formatDate}
+              onChange={this._handleChangeStartedDate} /><br/>
 
-          <ButtonNext disabled={!this.props.checkStep(this.props.step)} onTouchTap={this.props.gotoNextStep} />
+            <div className="fs-field-label-register-name">Finished Date</div>
+            <DatePicker
+              formatDate={this._formatDate}
+              onChange={this._handleChangeFinishedDate} /><br/>
+
+          </div>
+
+          <ButtonNext disabled={!this.props.checkStep(this.props.step)} onTouchTap={this._handleTouchTap} />
         </div>
       </li>
     );

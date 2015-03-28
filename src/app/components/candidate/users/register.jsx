@@ -41,7 +41,8 @@ var CandidateRegister = React.createClass({
       textButton: 'next',
       hideButton: true,
       stepMarked: [],
-      currentPercent: 0
+      currentPercent: 0,
+      formData: {}
     }
   },
   componentDidMount: function() {
@@ -50,9 +51,20 @@ var CandidateRegister = React.createClass({
   componentWillUnmount: function() {
     document.removeEventListener('keydown', this._handleKeyDown);
   },
+  updateFormData: function(data) {
+    var currentFormData = this.state.formData;
+
+    for (var key in data) {
+      if (data.hasOwnProperty(key)) {
+        currentFormData[key] = data[key];
+      };
+    }
+
+    this.setState({formData: currentFormData});
+  },
   _handleKeyDown: function(e) {
     var keyCode = e.keyCode || e.which;
-    if (keyCode == 13 && this.checkStep(this.state.currentStep) && (e.target.parentElement.className != "Select-input")) {
+    if (keyCode == 13 && this.checkStep(this.state.currentStep) && (e.target.parentElement.getAttribute('role') != "combobox")) {
       e.preventDefault();
       this._handleTouchTap();
     };
@@ -105,15 +117,15 @@ var CandidateRegister = React.createClass({
         <div className={"fs-form-wrap" + (this.checkStep(this.state.currentStep) ? ' fs-enable-bg' : ' fs-disable-bg')}>
           <div className="fs-form fs-form-full">
               <ol className={"fs-fields" + (this.state.lastStep < this.state.currentStep ? ' fs-display-next' : ' fs-display-prev')}>
-                <RegisterName stepClassname={this._getStepClassname(1)} markStep={this.markStep} step={1} gotoNextStep={this._handleTouchTap} checkStep={this.checkStep} />
-                <RegisterBirthday stepClassname={this._getStepClassname(2)} markStep={this.markStep} step={2} gotoNextStep={this._handleTouchTap} checkStep={this.checkStep} />
-                <RegisterGender stepClassname={this._getStepClassname(3)} markStep={this.markStep} step={3} gotoNextStep={this._handleTouchTap} checkStep={this.checkStep} />
-                <AcademicHistory stepClassname={this._getStepClassname(4)} markStep={this.markStep} step={4} gotoNextStep={this._handleTouchTap} checkStep={this.checkStep} />
-                <SkillsLanguage stepClassname={this._getStepClassname(5)} markStep={this.markStep} step={5} gotoNextStep={this._handleTouchTap} checkStep={this.checkStep} />
-                <LogicalIT stepClassname={this._getStepClassname(6)} markStep={this.markStep} step={6} gotoNextStep={this._handleTouchTap} checkStep={this.checkStep} />
-                <SkillsIT stepClassname={this._getStepClassname(7)} markStep={this.markStep} step={7} gotoNextStep={this._handleTouchTap} checkStep={this.checkStep} />
-                <WorkExperience stepClassname={this._getStepClassname(8)} markStep={this.markStep} step={8} gotoNextStep={this._handleTouchTap} checkStep={this.checkStep} />
-                <Other stepClassname={this._getStepClassname(9)} markStep={this.markStep} step={9} gotoNextStep={this._handleTouchTap} checkStep={this.checkStep} />
+                <RegisterName stepClassname={this._getStepClassname(1)} markStep={this.markStep} step={1} gotoNextStep={this._handleTouchTap} checkStep={this.checkStep} updateFormData={this.updateFormData} />
+                <RegisterBirthday stepClassname={this._getStepClassname(2)} markStep={this.markStep} step={2} gotoNextStep={this._handleTouchTap} checkStep={this.checkStep} updateFormData={this.updateFormData} />
+                <RegisterGender stepClassname={this._getStepClassname(3)} markStep={this.markStep} step={3} gotoNextStep={this._handleTouchTap} checkStep={this.checkStep} updateFormData={this.updateFormData} />
+                <AcademicHistory stepClassname={this._getStepClassname(4)} markStep={this.markStep} step={4} gotoNextStep={this._handleTouchTap} checkStep={this.checkStep} updateFormData={this.updateFormData} />
+                <SkillsLanguage stepClassname={this._getStepClassname(5)} markStep={this.markStep} step={5} gotoNextStep={this._handleTouchTap} checkStep={this.checkStep} updateFormData={this.updateFormData} />
+                <LogicalIT stepClassname={this._getStepClassname(6)} markStep={this.markStep} step={6} gotoNextStep={this._handleTouchTap} checkStep={this.checkStep} updateFormData={this.updateFormData} />
+                <SkillsIT stepClassname={this._getStepClassname(7)} markStep={this.markStep} step={7} gotoNextStep={this._handleTouchTap} checkStep={this.checkStep} updateFormData={this.updateFormData} />
+                <WorkExperience stepClassname={this._getStepClassname(8)} markStep={this.markStep} step={8} gotoNextStep={this._handleTouchTap} checkStep={this.checkStep} updateFormData={this.updateFormData} />
+                <Other stepClassname={this._getStepClassname(9)} markStep={this.markStep} step={9} gotoNextStep={this._handleTouchTap} checkStep={this.checkStep} updateFormData={this.updateFormData} />
               </ol>
           </div>
 
