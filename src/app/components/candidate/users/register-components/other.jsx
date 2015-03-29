@@ -80,6 +80,7 @@ var Other = React.createClass({
             
             <DropDownMenu
               menuItems={itLevels}
+              className="mui-drop-down-menu-halfblock"
               onChange={this._handleDropDownChange} />
           </div>          
 

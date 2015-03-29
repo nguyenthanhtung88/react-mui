@@ -135,12 +135,17 @@
     }
   }
 
+  .fs-continue-btn-skipable {
+    float: left;
+  }
+
   .fs-skip-btn {
     background-color: transparent;
     border: 1px solid $grey-50;
     padding: 0 20px 10px 20px;
     font-weight: bold;
     margin: 10px 0;
+    float: right;
     // display: inline-block;
 
     .fs-skip-text {

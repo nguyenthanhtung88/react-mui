@@ -92,7 +92,7 @@ var CandidateRegister = React.createClass({
     return "fs-step" + (this.state.currentStep == numStep ? ' fs-current fs-show' : this.state.lastStep == numStep ? ' fs-hide' : '');
   },
   checkStep: function(step) {
-    // return true;
+    return true;
     return (this.state.stepMarked.hasOwnProperty(step) && this.state.stepMarked[step]);
   },
   handleNavStepChange: function(nextStep) {

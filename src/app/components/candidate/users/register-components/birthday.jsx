@@ -123,18 +123,21 @@ var RegisterBirthday = React.createClass({
           <div className="fs-field-label-register-name">Year *</div>
           <DropDownMenu
             name="birthday_year"
+            className="mui-drop-down-menu-sm"
             menuItems={this._getYearLists()}
             onChange={this._handleInputYearChange} /><br/>
 
           <div className="fs-field-label-register-name">Month *</div>
           <DropDownMenu
             name="birthday_month"
+            className="mui-drop-down-menu-sm"
             menuItems={this._getMonthLists()}
             onChange={this._handleInputMonthChange} /><br/>
 
           <div className="fs-field-label-register-name">Day *</div>
           <DropDownMenu
             name="birthday_day"
+            className="mui-drop-down-menu-sm"
             menuItems={this._getDayLists()}
             onChange={this._handleInputDayChange} /><br/>
 

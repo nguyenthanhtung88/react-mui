@@ -36,7 +36,7 @@ var SkillsIT = React.createClass({
 
     this.setState({its: currentITList});
   },
-  _handleOnChange: function(value) {    
+  _handleOnChange: function(value) {
     var currentIts = this.state.its;
 
     currentIts[0].id = (typeof value === 'object') ? value.id : null;
@@ -85,16 +85,17 @@ var SkillsIT = React.createClass({
         <div className="fs-anim-lower">
           <div className="fs-company-history">
             <div className="fs-half-block">
-              <Combobox 
+              <Combobox
                 valueField='id' textField='name'
                 data={skillITs}
                 filter="contains"
                 placeholder="Select IT Skill..."
                 onChange={this._handleOnChange} />
             </div>
-            
+
             <DropDownMenu
               menuItems={itLevels}
+              className="mui-drop-down-menu-halfblock"
               onChange={this._handleDropDownChange} />
           </div>
 

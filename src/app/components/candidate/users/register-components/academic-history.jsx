@@ -155,15 +155,15 @@ var AcademicHistory = React.createClass({
 
           <div className="fs-anim-lower">
             <div className="fs-company-history">
-              <Combobox 
+              <Combobox
                 valueField='id' textField='name'
                 data={highschoolOptions}
                 filter="contains"
-                placeholder="Your highschool name"              
+                placeholder="Your highschool name"
                 ref="highschool_name"
                 onChange={this._handleInputChange.bind(this, 'highschool', 1)} />
             </div>
-            
+
             <ButtonNext disabled={!this.checkStep(this.state.currentStep)} onTouchTap={this._handleTouchTap} />
           </div>
         </div>
@@ -176,11 +176,11 @@ var AcademicHistory = React.createClass({
 
           <div className="fs-anim-lower">
             <div className="fs-company-history">
-              <Combobox 
+              <Combobox
                 valueField='id' textField='name'
                 data={bachelorOptions}
                 filter="contains"
-                placeholder="Your university name"              
+                placeholder="Your university name"
                 ref="bachelor_name"
                 onChange={this._handleInputChange.bind(this, 'bachelor', 2)} />
             </div>
@@ -196,17 +196,16 @@ var AcademicHistory = React.createClass({
 
           <div className="fs-anim-lower">
             <div className="fs-company-history">
-              <Combobox 
+              <Combobox
                 valueField='id' textField='name'
                 data={masterOptions}
                 filter="contains"
-                placeholder="Your master course name"              
+                placeholder="Your master course name"
                 ref="master_name"
                 onChange={this._handleInputChange.bind(this, 'master', 3)} />
             </div>
-            
+            <ButtonNext skipable="skipable" disabled={!this.checkStep(this.state.currentStep)} onTouchTap={this._handleTouchTap} />
             <ButtonSkip disabled={false} onTouchTap={this._handleSkipButton} />
-            <ButtonNext disabled={!this.checkStep(this.state.currentStep)} onTouchTap={this._handleTouchTap} />
           </div>
         </div>
 
@@ -217,17 +216,17 @@ var AcademicHistory = React.createClass({
 
           <div className="fs-anim-lower">
             <div className="fs-company-history">
-              <Combobox 
+              <Combobox
                 valueField='id' textField='name'
                 data={doctorOptions}
                 filter="contains"
-                placeholder="Your doctor course name"              
+                placeholder="Your doctor course name"
                 ref="doctor_name"
                 onChange={this._handleInputChange.bind(this, 'doctor', 4)} />
               </div>
-            
+
+            <ButtonNext skipable="skipable" disabled={!this.checkStep(this.state.currentStep)} onTouchTap={this._handleTouchTap} />
             <ButtonSkip disabled={false} onTouchTap={this._handleSkipButton} />
-            <ButtonNext disabled={!this.checkStep(this.state.currentStep)} onTouchTap={this._handleTouchTap} />
           </div>
         </div>
       </li>
