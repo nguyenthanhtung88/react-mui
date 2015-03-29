@@ -29,7 +29,7 @@ var controlLinks = [
 var CandidateRegister = React.createClass({
     getDefaultProps: function() {
         return {
-            percentStepMap: [0, 10, 20, 30, 50, 60, 70, 80, 90, 100]
+            percentStepMap: [0, 17, 42, 50, 67, 83, 100, 100, 100, 100]
         }
     },
     getInitialState: function() {
@@ -61,7 +61,6 @@ var CandidateRegister = React.createClass({
         }
 
         this.setState({formData: currentFormData});
-        console.log(this.createPostCandidate());
     },
     _handleKeyDown: function(e) {
         var keyCode = e.keyCode || e.which;
@@ -76,9 +75,7 @@ var CandidateRegister = React.createClass({
 
         if (!nextStep) {
             this.setState({currentPercent: 100});
-            console.log(JSON.stringify(this.createPostCandidate()));
-            alert('Done ...');
-            return false;
+            this.register();
         };
 
         this.setState({
@@ -88,13 +85,26 @@ var CandidateRegister = React.createClass({
             currentPercent: this.props.percentStepMap[progressStep - 1],
             textButton: nextStep == this.state.maxStep ? 'Submit' : 'next'
         });
-
+    },
+    register: function() {
+        var postCandidate = this.createPostCandidate();
+        console.log(postCandidate);
+        $.ajax({
+            type: "POST",
+            url: this.props.postUrl,
+            data: postCandidate,
+            success: function(data) {
+                console.log(data);
+            },
+            error: function(xmlHttpReq, textStatus, errorMessage) {
+                console.log(errorMessage);
+            }
+        });
     },
     _getStepClassname: function(numStep) {
         return "fs-step" + (this.state.currentStep == numStep ? ' fs-current fs-show' : this.state.lastStep == numStep ? ' fs-hide' : '');
     },
     createPostCandidate: function() {
-        console.log(this.state.formData);
         return {
             candidate: this.createPostProfile(this.state.formData),
             skills: this.createPostSkills(this.state.formData),
@@ -109,7 +119,6 @@ var CandidateRegister = React.createClass({
         });
         candidate["name"] = formData.last_name + " " + formData.middle_name + " " + formData.first_name;
 
-        console.log(formData.highschool);
         ["highschool", "bachelor", "master", "doctor"].forEach(function(academic_history) {
             if (typeof(formData[academic_history]) != "undefined") {
                 candidate["m_" + academic_history + "_id"] = formData[academic_history].id;
