@@ -1,8 +1,8 @@
 var React = require('react'),
-  Router = require('react-router'),
-  Route = Router.Route,
-  Redirect = Router.Redirect,
-  DefaultRoute = Router.DefaultRoute;
+    Router = require('react-router'),
+    Route = Router.Route,
+    Redirect = Router.Redirect,
+    DefaultRoute = Router.DefaultRoute;
 
 // Define all of React Components
 var Master = require('./components/candidate/layouts/default.jsx');
@@ -21,13 +21,13 @@ var CandidateSignup = require('./components/candidate/users/sign-up.jsx');
 */
 
 var AppRoutes = (
-  <Route name="root" path="/" handler={Master}>
-    <DefaultRoute handler={CandidateDashboard} />
+    <Route name="root" path="/" handler={Master}>
+        <DefaultRoute handler={CandidateDashboard} />
 
-    <Route name="dashboard" handler={CandidateDashboard} />
-    <Route name="signup" handler={CandidateSignup} />
-    <Route name="register" handler={CandidateRegister} />
-  </Route>
+        <Route name="dashboard" handler={CandidateDashboard} />
+        <Route name="signup" handler={CandidateSignup} />
+        <Route name="register" handler={CandidateRegister} />
+    </Route>
 );
 
 module.exports = AppRoutes;

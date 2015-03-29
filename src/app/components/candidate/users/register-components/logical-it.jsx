@@ -25,9 +25,9 @@ var LogicalIT = React.createClass({
     },
     _handleTouchTap: function() {
         var transferFormData = {
-            logicalIT: [
-                {id: null, name: 'Logical', score: this.state.logicalPoint},
-                {id: null, name: 'IT Subject', score: this.state.itPoint}
+            logical_it: [
+                {label: 155, name: 'Logical', score: this.state.logicalPoint},
+                {label: 154, name: 'IT Subject', score: this.state.itPoint}
             ]
         };
         this.props.updateFormData(transferFormData);

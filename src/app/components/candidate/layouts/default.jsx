@@ -9,26 +9,26 @@ var Link = Router.Link;
 
 var Master = React.createClass({
 
-  mixins: [Router.State],
+    mixins: [Router.State],
 
-  render: function() {
+    render: function() {
 
-    return (
-      <AppCanvas predefinedLayout={1}>
+        return (
+            <AppCanvas predefinedLayout={1}>
 
-        <Toolbar>
-          <ToolbarGroup float="left">
-            <div className="logo">
-              <Link to="root"><img src="./images/logo_framgia.png" /></Link>
-            </div>
-          </ToolbarGroup>
-        </Toolbar>
+                <Toolbar>
+                    <ToolbarGroup float="left">
+                        <div className="logo">
+                            <Link to="root"><img src="./images/logo_framgia.png" /></Link>
+                        </div>
+                    </ToolbarGroup>
+                </Toolbar>
 
-        <RouteHandler />
+                <RouteHandler />
 
-      </AppCanvas>
-    );
-  },
+            </AppCanvas>
+        );
+    },
 
 });
 
